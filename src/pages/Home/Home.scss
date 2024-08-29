@@ -1,24 +1,14 @@
 .home {
-  // background-color: #030b6b;
   background-color: #222;
   min-height: 100vh;
+  padding: 0;
+  margin: 0;
 
-  & nav {
+  nav {
     padding-top: 1.5rem;
     padding-bottom: 1.5rem;
-    // color: #fff;
-    // & > .logo {
-    //   color: #fff;
-    // }
-    // padding-right: 0;
   }
 }
-
-// .container {
-//   display: flex;
-//   flex-direction: column;
-//   gap: 44px;
-// }
 
 .logo {
   display: flex;
@@ -33,11 +23,12 @@
 .home-links {
   display: flex;
   justify-content: center;
-
   align-items: center;
-  & li a {
+
+  li a {
     color: #141414;
   }
+
   & > * {
     margin-left: 1rem;
     color: #1a1a1a;
@@ -57,50 +48,90 @@
   gap: 34px;
 }
 
+.hero-text h2 {
+  font-size: 40px;
+}
+
 .hero-text {
-  width: 50%;
-  & > * {
-    color: #fff;
-    margin-bottom: 2rem;
-  }
-  & > h2 span {
+  width: 100%;
+  margin-bottom: 2rem;
+
+  padding-right: 0px;
+
+  h2 span {
     display: block;
   }
-  & .hero-buttons a {
+
+  p {
+    padding-bottom: 18px;
+  }
+
+  .hero-buttons a {
+    color: #fff;
+  }
+
+  & > * {
     color: #fff;
   }
 }
+
 .hero-image {
   padding-top: 44px;
 }
+
 @media screen and (max-width: 600px) {
+  .logo-text {
+    font-size: 24px;
+  }
+
   .hero {
     flex-direction: column;
+    gap: 20px;
+    padding: 12px;
+  }
+
+  .display-none {
+    display: none;
+  }
+
+  .home {
+    padding: 0 30px;
+  }
+
+  .home-btn {
+    padding: 8px 12px !important;
+    font-size: 16px !important;
+    // width: 100%;
   }
 
   .hero-text {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    width: 100%;
-    margin: auto;
+    max-width: 500px;
+    margin: 0;
     text-align: center;
   }
+
+  .hero-text h2 {
+    font-size: 24px;
+  }
+
+  .hero-text p {
+    font-size: 14px;
+  }
+
+  .hero-buttons {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 12px;
+  }
+
   .hero-image {
     width: 100%;
-    &img {
+    img {
       width: 100%;
     }
   }
-}
-
-.hero-text h2 {
-  font-size: 42px;
-}
-
-.hero-text p {
-  font-size: 18px;
 }
 
 .--flex-home {
@@ -109,7 +140,7 @@
 }
 
 .--btn-primary {
-  font-size: 24px !important;
+  font-size: 2rem !important;
 }
 
 .btn-wrapper {
@@ -118,13 +149,13 @@
 }
 
 .btn {
-  position: absolute; /* or relative */
+  position: absolute;
   transition: transform 0.3s ease;
-  z-index: 10; /* Ensures it stays above other elements */
-}
+  z-index: 10;
 
-.btn:hover {
-  transform: scale(1.01);
+  &:hover {
+    transform: scale(1.01);
+  }
 }
 
 .home-btn {

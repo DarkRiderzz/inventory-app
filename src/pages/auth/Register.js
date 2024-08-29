@@ -100,6 +100,7 @@ const Register = () => {
               value={password}
               onChange={handleInputChange}
             />
+
             <input
               type="password"
               placeholder="Confirm Password"
@@ -108,14 +109,16 @@ const Register = () => {
               value={password2}
               onChange={handleInputChange}
             />
+
             <input
-              type="otp"
+              type="text"
               placeholder="OTP"
               required
               name="otp"
               value={otp}
               onChange={handleInputChange}
             />
+
             <button type="submit" className="--btn --btn-primary --btn-block">
               Register
             </button>

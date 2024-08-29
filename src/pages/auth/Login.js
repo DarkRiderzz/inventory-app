@@ -90,7 +90,7 @@ const Login = () => {
           <span className={styles.register}>
             <Link to="/">Home</Link>
             <p> &nbsp; Don't have an account? &nbsp;</p>
-            <Link to="/register">Register</Link>
+            <Link to="/verify-email">Register</Link>
           </span>
         </div>
       </Card>

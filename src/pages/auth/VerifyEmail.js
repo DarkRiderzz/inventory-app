@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./auth.module.scss";
 import { TiUserAddOutline } from "react-icons/ti";
 import Card from "../../components/card/Card";
@@ -49,7 +49,10 @@ const VerifyEmail = () => {
     setIsLoading(true);
     try {
       const data = await verifyOtp(userData);
-      // console.log(data);
+      if (!data) {
+        setIsLoading(false);
+        return;
+      }
       //   await dispatch(SET_LOGIN(true));
       //   await dispatch(SET_NAME(data.name));
       navigate("/register", { state: { email: email } });

@@ -19,7 +19,7 @@ const Home = () => {
           <div className="show-logout">
             <ShowOnLogout>
               <li>
-                <button className="--btn --btn-primary home-btn ">
+                <button className="--btn --btn-primary home-btn display-none ">
                   <Link className="cbutton" to="/verify-email">
                     Register
                   </Link>
@@ -61,17 +61,7 @@ const Home = () => {
                 </Link>
               </button>
             </div>
-            <div className="hero-buttons">
-              {/* <button className="--btn --btn-secondary">
-                <Link to="#">Read More</Link>
-              </button> */}
-            </div>
           </div>
-          {/* <div className="--flex-start">
-            <NumberText num="14K" text="Brand Owners" />
-            <NumberText num="23K" text="Active Users" />
-            <NumberText num="500+" text="Partners" />
-          </div> */}
         </div>
 
         <div className="hero-image">

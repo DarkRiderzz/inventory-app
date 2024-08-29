@@ -40,7 +40,7 @@ export const verifyOtp = async (userData) => {
       }
     );
     if (response.statusText === "OK") {
-      toast.success("lesss Go");
+      toast.success("Verified Successfully");
     }
     return response.data;
   } catch (error) {
