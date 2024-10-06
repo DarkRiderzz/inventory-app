@@ -23,20 +23,25 @@ const Forgot = () => {
       email,
     };
 
-    await forgotPassword(userData);
-    setEmail("");
+    try {
+      await forgotPassword(userData);
+      toast.success("Password reset email sent");
+      setEmail("");
+    } catch (error) {
+      toast.error("An error occurred. Please try again.");
+    }
   };
 
   return (
-    <div className={`container ${styles.auth}`}>
-      <Card>
-        <div className={styles.form}>
-          <div className="--flex-center">
+    <div className={styles.container}>
+      <div className={styles.margin}>
+        <div className={styles.card}>
+          <div className={styles.iconContainer}>
             <AiOutlineMail size={35} color="#999" />
           </div>
-          <h2>Forgot Password</h2>
+          <h2 className={styles.title}>Forgot Password</h2>
 
-          <form onSubmit={forgot}>
+          <form onSubmit={forgot} className={styles.form}>
             <input
               type="email"
               placeholder="Email"
@@ -44,22 +49,27 @@ const Forgot = () => {
               name="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              className={styles.input}
             />
 
-            <button type="submit" className="--btn --btn-primary --btn-block">
+            <button type="submit" className={styles.button}>
               Get Reset Email
             </button>
-            <div className={styles.links}>
+            <div className={styles.firstLink}>
               <p>
-                <Link to="/">- Home</Link>
+                <Link to="/" className={styles.link}>
+                  Home
+                </Link>
               </p>
               <p>
-                <Link to="/login">- Login</Link>
+                <Link to="/login" className={styles.link}>
+                  Login
+                </Link>
               </p>
             </div>
           </form>
         </div>
-      </Card>
+      </div>
     </div>
   );
 };

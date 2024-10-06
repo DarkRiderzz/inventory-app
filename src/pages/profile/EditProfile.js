@@ -135,7 +135,7 @@ const EditProfile = () => {
               <input type="file" name="image" onChange={handleImageChange} />
             </p> */}
             <div>
-              <button className="--btn --btn-primary">Edit Profile</button>
+              <button className="btn-primary">Edit Profile</button>
             </div>
           </span>
         </form>

@@ -5,11 +5,11 @@ const InfoBox = ({ bgColor, title, count, icon, link }) => {
   return (
     <Link to={`/${link}`}>
       <div>
-        <div className={`info-box ${bgColor}`}>
-          <span className="info-icon --color-white">{icon}</span>
+        <div className={`info-box `}>
+          <span className={`info-icon --color-white ${bgColor}`}>{icon}</span>
           <span className="info-text">
-            <p>{title}</p>
-            <h4>{count}</h4>
+            <p className={`${bgColor}`}>{title}</p>
+            <h4 className={`${bgColor}`}>{count}</h4>
           </span>
         </div>
       </div>

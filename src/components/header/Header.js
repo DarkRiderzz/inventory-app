@@ -16,13 +16,13 @@ const Header = () => {
   };
 
   return (
-    <div className="--pad header">
+    <div className="--pad header ">
       <div className="--flex-between">
         <h3>
           <span className="--fw-thin">Welcome, </span>
           <span className="">{name}</span>
         </h3>
-        <button onClick={logout} className="--btn --btn-danger">
+        <button onClick={logout} className="btn-secondary">
           Logout
         </button>
       </div>

@@ -54,7 +54,6 @@ const Register = () => {
     setIsLoading(true);
     try {
       const data = await registerUser(userData);
-      // console.log(data);
       await dispatch(SET_LOGIN(true));
       await dispatch(SET_NAME(data.name));
       navigate("/dashboard");
@@ -65,16 +64,16 @@ const Register = () => {
   };
 
   return (
-    <div className={`container ${styles.auth}`}>
+    <div className={styles.container}>
       {isLoading && <Loader />}
-      <Card>
-        <div className={styles.form}>
-          <div className="--flex-center">
+      <div className={styles.margin}>
+        <div className={styles.card}>
+          <div className={styles.iconContainer}>
             <TiUserAddOutline size={35} color="#999" />
           </div>
-          <h2>Register</h2>
+          <h2 className={styles.title}>Register</h2>
 
-          <form onSubmit={register}>
+          <form onSubmit={register} className={styles.form}>
             <input
               type="text"
               placeholder="Name"
@@ -82,6 +81,7 @@ const Register = () => {
               name="name"
               value={name}
               onChange={handleInputChange}
+              className={styles.input}
             />
             <input
               type="email"
@@ -91,6 +91,7 @@ const Register = () => {
               value={email}
               onChange={handleInputChange}
               readOnly
+              className={styles.input}
             />
             <input
               type="password"
@@ -99,8 +100,8 @@ const Register = () => {
               name="password"
               value={password}
               onChange={handleInputChange}
+              className={styles.input}
             />
-
             <input
               type="password"
               placeholder="Confirm Password"
@@ -108,8 +109,8 @@ const Register = () => {
               name="password2"
               value={password2}
               onChange={handleInputChange}
+              className={styles.input}
             />
-
             <input
               type="text"
               placeholder="OTP"
@@ -117,20 +118,30 @@ const Register = () => {
               name="otp"
               value={otp}
               onChange={handleInputChange}
+              className={styles.input}
             />
-
-            <button type="submit" className="--btn --btn-primary --btn-block">
+            <button type="submit" className={styles.button}>
               Register
             </button>
           </form>
 
-          <span className={styles.register}>
-            <Link to="/">Home</Link>
-            <p> &nbsp; Already have an account? &nbsp;</p>
-            <Link to="/login">Login</Link>
-          </span>
+          <div className={styles.firstLink}>
+            <Link to="/" className={styles.link}>
+              Home
+            </Link>
+          </div>
+          <div className={styles.links}>
+            <div className={styles.registerContainer}>
+              <p className={styles.text}>
+                &nbsp; Already have an account? &nbsp;
+              </p>
+              <Link to="/login" className={styles.link}>
+                Login
+              </Link>
+            </div>
+          </div>
         </div>
-      </Card>
+      </div>
     </div>
   );
 };

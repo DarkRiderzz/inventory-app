@@ -53,7 +53,9 @@ const EditProduct = () => {
   const saveProduct = async (e) => {
     e.preventDefault();
     const formData = new FormData();
-    formData.append("name", product?.name);
+    // formData.append("name", product?.name);
+    formData.append("title", product?.title);
+    formData.append("sku", product?.sku);
     formData.append("category", product?.category);
     formData.append("color", product?.color);
     formData.append("size", product?.size);

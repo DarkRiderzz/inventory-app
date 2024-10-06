@@ -1,0 +1,86 @@
+/* ImportProducts.css */
+
+.import-products-container {
+  display: flex;
+  background: #f9f9f9;
+  border-radius: 8px;
+  padding: 4px 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
+  margin: 35px auto;
+  text-align: center;
+}
+
+.import-products-form {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.import-products-file-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.import-products-label {
+  display: inline-block;
+  padding: 6px 12px;
+  border: 2px solid #ddd;
+  border-radius: 4px;
+  background-color: #fff;
+  color: #333;
+  cursor: pointer;
+  font-size: 1.2em;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.import-products-label:hover {
+  background-color: #f1f1f1;
+  border-color: #aaa;
+}
+
+.import-products-input {
+  display: none;
+}
+
+.import-products-file-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.3em;
+  color: #333;
+}
+
+.import-products-remove-file {
+  background: none;
+  border: none;
+  color: #dc3545;
+  font-size: 1.4em;
+  cursor: pointer;
+}
+
+.import-products-remove-file:hover {
+  color: #a30000;
+}
+
+.import-products-button {
+  background-color: #004e92;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 1em;
+  transition: background-color 0.3s ease;
+}
+
+.import-products-button:hover {
+  background-color: #003c7e;
+}
+
+.import-products-button:disabled {
+  background-color: #aaa;
+  cursor: not-allowed;
+}

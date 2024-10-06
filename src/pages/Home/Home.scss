@@ -81,7 +81,7 @@
 
 @media screen and (max-width: 600px) {
   .logo-text {
-    font-size: 24px;
+    font-size: 20px;
   }
 
   .hero {
@@ -95,19 +95,20 @@
   }
 
   .home {
-    padding: 0 30px;
+    padding: 0 8px;
   }
 
   .home-btn {
     padding: 8px 12px !important;
-    font-size: 16px !important;
+    font-size: 14px !important;
     // width: 100%;
   }
 
   .hero-text {
     max-width: 500px;
     margin: 0;
-    text-align: center;
+    text-align: left;
+    align-items: left;
   }
 
   .hero-text h2 {
@@ -122,7 +123,7 @@
     width: 100%;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     padding-top: 12px;
   }
 
@@ -169,4 +170,8 @@
   color: #000000 !important;
   font-weight: 500;
   letter-spacing: 0.4px;
+}
+
+.w-450 {
+  width: 400px;
 }

@@ -1,125 +1,95 @@
-.auth {
-  min-height: 80vh;
+/* auth.module.scss */
+.container {
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-
-  .img {
-    animation: slide-down 0.5s ease;
-  }
-
-  .form {
-    width: 35rem;
-    padding: 1.5rem;
-    animation: slide-up 0.5s ease;
-    background-color: #fff;
-    h2 {
-      color: var(--color-danger);
-      text-align: center;
-    }
-    form {
-      input[type="text"],
-      input[type="email"],
-      input[type="password"] {
-        display: block;
-        font-size: 1.6rem;
-        font-weight: 300;
-        padding: 1rem;
-        margin: 1rem auto;
-        width: 100%;
-        border: 1px solid #ccc;
-        border-bottom: 3px solid #ccc;
-        border-radius: 3px;
-        outline: none;
-
-        &:focus {
-          outline: none;
-          box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.1);
-          border-bottom: 3px solid #55c57a;
-        }
-
-        &:focus:invalid {
-          border-bottom: 3px solid #ff7730;
-        }
-      }
-      .links {
-        display: flex;
-        justify-content: space-between;
-        margin: 5px 0;
-      }
-
-      p {
-        text-align: center;
-        margin: 1rem;
-      }
-    }
-    .register {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin-top: 1rem;
-    }
-  }
-
-  @keyframes slide-up {
-    0% {
-      transform: translateY(-5rem);
-    }
-    100% {
-      transform: translateY(0);
-    }
-  }
-  @keyframes slide-down {
-    0% {
-      transform: translateY(5rem);
-    }
-    100% {
-      transform: translateY(0);
-    }
-  }
+  background: linear-gradient(135deg, #0a1930, #004e92);
+  font-family: Arial, sans-serif;
 }
 
-.--btn-primary {
-  font-size: 2rem;
-}
-@media screen and (max-width: 700px) {
-  .img {
-    display: none;
-  }
-}
-
-@media screen and (max-width: 480px) {
-  .form {
-    padding: 0.5rem; // Further reduce padding for very small screens
-    width: 100%; // Ensure form takes up the full screen width
-  }
-  h2 {
-    font-size: 1.6rem; // Further reduce heading size
-  }
-  input[type="text"],
-  input[type="email"],
-  input[type="password"] {
-    font-size: 1.2rem; // Reduce input font size
-    padding: 0.7rem; // Adjust input padding
-  }
+.card {
+  background-color: #fff;
+  padding: 3rem;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  max-width: 400px;
+  width: 100%;
+  animation: fadeIn 0.5s ease;
+  text-align: center;
 }
 
-@media screen and (max-width: 385px) {
-  .form {
-    // padding: 0.3rem; // Even smaller padding for very narrow screens
-    max-width: 300px;
-    margin: 0 auto;
-  }
-  h2 {
-    font-size: 1.4rem; // Reduce heading size further
-  }
-  input[type="text"],
-  input[type="email"],
-  input[type="password"] {
-    font-size: 1rem; // Reduce input font size further
-    padding: 0.2rem; // Adjust input padding
-  }
-  p {
-    font-size: 1rem; // Reduce paragraph text size
-  }
+.input {
+  width: 100%;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1.4rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.inputFocus {
+  border-color: #0056b3;
+  box-shadow: 0 0 8px rgba(0, 86, 179, 0.2);
+}
+
+.button {
+  padding: 1rem;
+  border-radius: 8px;
+  font-size: 1.6rem;
+  cursor: pointer;
+  width: 100%;
+  border: none;
+  background-color: #0a1930;
+  color: #fff;
+  transition: background-color 0.3s ease, transform 0.2s;
+}
+
+.buttonHover {
+  background-color: #004494;
+}
+
+.link {
+  // display: block;
+  margin-top: 1rem;
+  color: #3b5998;
+  font-size: 1.4rem;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.registerContainer {
+  display: flex;
+
+  align-items: flex-end;
+  margin-top: 1.5rem;
+}
+
+.registerText {
+  margin: 0;
+  color: #555;
+  font-size: 1.4rem;
+}
+
+.links {
+  display: flex;
+  gap: 1.5rem;
+
+  flex-direction: column;
+  justify-content: center;
+  // align-items: center;
+}
+
+.firstLink {
+  // display: block;
+  padding-left: 8px;
+  padding-right: 8px;
+  display: flex;
+  justify-content: space-between;
+  padding-top: 1.5rem !important;
+}
+
+.margin {
+  margin: 12px;
 }

@@ -40,69 +40,154 @@ const ProductDetail = () => {
   }, [isLoggedIn, isError, message, dispatch, id]); //id added
 
   return (
+    // <div className="product-detail">
+    //   <h3 className="--mt">Product Detail</h3>
+    //   <Card cardClass="card">
+    //     {isLoading && <SpinnerImg />}
+    //     {product && (
+    //       <div className="detail">
+    //         <Card cardClass="group">
+    //           <div className="image-wrapper">
+    //             {product?.image ? (
+    //               <img
+    //                 src={product.image.filePath}
+    //                 alt={product.image.fileName}
+    //               />
+    //             ) : (
+    //               <p>No image set for this product</p>
+    //             )}
+    //           </div>
+    //         </Card>
+
+    //         <div>
+    //           <h4>Product Availability: {stockStatus(product.quantity)}</h4>
+    //           <hr />
+    //           <h4>
+    //             <span className="badge">SKU Code: </span> &nbsp; {product.sku}
+    //           </h4>
+    //           <p>
+    //             <b>&rarr; Product title : </b> {product.title}
+    //           </p>
+    //           {/* <p>
+    //           <b>&rarr; ProductId : </b> {product.sku}
+    //         </p> */}
+    //           <p>
+    //             <b>&rarr; Category : </b> {product.category}
+    //           </p>
+    //           <p>
+    //             <b>&rarr; Color : </b> {product.color}
+    //           </p>
+    //           <p>
+    //             <b>&rarr; Size : </b> {product.size}
+    //           </p>
+    //           <p>
+    //             <b>&rarr; Price : </b> {"₹"}
+    //             {product.price}
+    //           </p>
+    //           <p>
+    //             <b>&rarr; Quantity in stock : </b> {product.quantity}
+    //           </p>
+    //           <p>
+    //             <b>&rarr; Bin : </b> {product.location}
+    //           </p>
+    //           <p>
+    //             <b>&rarr; Total Value in stock : </b> {"₹"}
+    //             {product.price * product.quantity}
+    //           </p>
+    //           <hr />
+    //           <div
+    //             dangerouslySetInnerHTML={{
+    //               __html: DOMPurify.sanitize(product.description),
+    //             }}
+    //           ></div>
+    //           <hr />
+    //           <code className="--color-dark">
+    //             Created on:{" "}
+    //             {product.createdAt
+    //               ? new Date(product.createdAt).toLocaleString("en-US")
+    //               : "N/A"}
+    //           </code>
+    //           <br />
+    //           <code className="--color-dark">
+    //             Last Updated:{" "}
+    //             {product.updatedAt
+    //               ? new Date(product.updatedAt).toLocaleString("en-US")
+    //               : "N/A"}
+    //           </code>
+    //         </div>
+    //       </div>
+    //     )}
+    //   </Card>
+    // </div>
     <div className="product-detail">
       <h3 className="--mt">Product Detail</h3>
       <Card cardClass="card">
         {isLoading && <SpinnerImg />}
         {product && (
           <div className="detail">
-            {/* <Card cardClass="group">
+            <div className="image-wrapper">
               {product?.image ? (
                 <img
                   src={product.image.filePath}
                   alt={product.image.fileName}
                 />
               ) : (
-                
-                  <p>No image set for this product</p> 
-                
+                <p>No image set for this product</p>
               )}
-            </Card> */}
-            <h4>Product Availability: {stockStatus(product.quantity)}</h4>
-            <hr />
-            <h4>
-              <span className="badge">SKU Code: </span> &nbsp; {product.name}
-            </h4>
-            <p>
-              <b>&rarr; ProductId : </b> {product.sku}
-            </p>
-            <p>
-              <b>&rarr; Category : </b> {product.category}
-            </p>
-            <p>
-              <b>&rarr; Color : </b> {product.color}
-            </p>
-            <p>
-              <b>&rarr; Size : </b> {product.size}
-            </p>
-            <p>
-              <b>&rarr; Price : </b> {"₹"}
-              {product.price}
-            </p>
-            <p>
-              <b>&rarr; Quantity in stock : </b> {product.quantity}
-            </p>
-            <p>
-              <b>&rarr; Bin : </b> {product.location}
-            </p>
-            <p>
-              <b>&rarr; Total Value in stock : </b> {"₹"}
-              {product.price * product.quantity}
-            </p>
-            <hr />
-            <div
-              dangerouslySetInnerHTML={{
-                __html: DOMPurify.sanitize(product.description),
-              }}
-            ></div>
-            <hr />
-            <code className="--color-dark">
-              Created on: {product.createdAt.toLocaleString("en-US")}
-            </code>
-            <br />
-            <code className="--color-dark">
-              Last Updated: {product.updatedAt.toLocaleString("en-US")}
-            </code>
+            </div>
+            <div className="info">
+              <h4>Product Availability: {stockStatus(product.quantity)}</h4>
+              <hr />
+              <h4>
+                <span className="badge">SKU Code: </span> &nbsp; {product.sku}
+              </h4>
+              <p>
+                <b>&rarr; Product title : </b> {product.title}
+              </p>
+              <p>
+                <b>&rarr; Category : </b> {product.category}
+              </p>
+              <p>
+                <b>&rarr; Color : </b> {product.color}
+              </p>
+              <p>
+                <b>&rarr; Size : </b> {product.size}
+              </p>
+              <p>
+                <b>&rarr; Price : </b> {"₹"}
+                {product.price}
+              </p>
+              <p>
+                <b>&rarr; Quantity in stock : </b> {product.quantity}
+              </p>
+              <p>
+                <b>&rarr; Bin : </b> {product.location}
+              </p>
+              <p>
+                <b>&rarr; Total Value in stock : </b> {"₹"}
+                {product.price * product.quantity}
+              </p>
+              <hr />
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: DOMPurify.sanitize(product.description),
+                }}
+              ></div>
+              <hr />
+              <code className="--color-dark">
+                Created on:{" "}
+                {product.createdAt
+                  ? new Date(product.createdAt).toLocaleString("en-US")
+                  : "N/A"}
+              </code>
+              <br />
+              <code className="--color-dark">
+                Last Updated:{" "}
+                {product.updatedAt
+                  ? new Date(product.updatedAt).toLocaleString("en-US")
+                  : "N/A"}
+              </code>
+            </div>
           </div>
         )}
       </Card>

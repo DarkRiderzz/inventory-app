@@ -9,13 +9,29 @@ const initialState = {
   isSuccess: false,
   isLoading: false,
   message: "",
+  importStatus: "idle",
+  downloadStatus: "idle",
   totalStoreValue: 0,
   outOfStock: 0,
   outOfStockProducts: [],
   limitedStockProducts: [],
   limitedStock: 0,
   category: [],
+  error: null,
 };
+
+// Async thunk for importing products
+export const importProducts = createAsyncThunk(
+  "products/importProducts",
+  async (file, thunkAPI) => {
+    try {
+      const response = await productService.importProducts(file);
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data.message);
+    }
+  }
+);
 
 // Create New Product
 export const createProduct = createAsyncThunk(
@@ -92,6 +108,25 @@ export const getProduct = createAsyncThunk(
     }
   }
 );
+
+export const exportProducts = createAsyncThunk(
+  "products/exportProducts",
+  async (_, thunkAPI) => {
+    try {
+      return await productService.exportProducts();
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      console.log(message);
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 // Update product
 export const updateProduct = createAsyncThunk(
   "products/updateProduct",
@@ -105,7 +140,7 @@ export const updateProduct = createAsyncThunk(
           error.response.data.message) ||
         error.message ||
         error.toString();
-      console.log(message);
+      // console.log(message);
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -258,6 +293,30 @@ const productSlice = createSlice({
         state.isError = true;
         state.message = action.payload;
         toast.error(action.payload);
+      })
+      .addCase(importProducts.pending, (state) => {
+        // state.isLoading = true;
+        state.importStatus = "loading";
+      })
+      .addCase(importProducts.fulfilled, (state, action) => {
+        // state.isLoading = false;
+        state.importStatus = "succeeded";
+        // Optionally update products if necessary
+        // state.products = action.payload;
+      })
+      .addCase(importProducts.rejected, (state, action) => {
+        state.importStatus = "failed";
+        state.error = action.payload;
+      })
+      .addCase(exportProducts.pending, (state) => {
+        state.downloadStatus = "loading";
+      })
+      .addCase(exportProducts.fulfilled, (state) => {
+        state.downloadStatus = "succeeded";
+      })
+      .addCase(exportProducts.rejected, (state, action) => {
+        state.downloadStatus = "failed";
+        state.error = action.payload;
       });
   },
 });
@@ -279,5 +338,7 @@ export const selectOutOfStockProducts = (state) =>
   state.product.outOfStockProducts;
 export const selectLimitedStockProducts = (state) =>
   state.product.limitedStockProducts;
+export const selectImportStatus = (state) => state.product.importStatus;
+export const selectDownloadStatus = (state) => state.product.downloadStatus;
 
 export default productSlice.reducer;

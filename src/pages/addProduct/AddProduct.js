@@ -9,7 +9,8 @@ import {
 } from "../../redux/features/product/productSlice";
 
 const initialState = {
-  name: "",
+  title: "",
+  sku: "",
   category: "",
   quantity: "",
   price: "",
@@ -28,7 +29,8 @@ const AddProduct = () => {
 
   const isLoading = useSelector(selectIsLoading);
 
-  const { name, category, price, quantity, color, size, location } = product;
+  const { title, sku, category, price, quantity, color, size, location } =
+    product;
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -40,18 +42,19 @@ const AddProduct = () => {
     setImagePreview(URL.createObjectURL(e.target.files[0]));
   };
 
-  const generateKSKU = (category) => {
-    const letter = category.slice(0, 3).toUpperCase();
-    const number = Date.now();
-    const sku = letter + "-" + number;
-    return sku;
-  };
+  // const generateKSKU = (category) => {
+  //   const letter = category.slice(0, 3).toUpperCase();
+  //   const number = Date.now();
+  //   const sku = letter + "-" + number;
+  //   return sku;
+  // };
 
   const saveProduct = async (e) => {
     e.preventDefault();
     const formData = new FormData();
-    formData.append("name", name);
-    formData.append("sku", generateKSKU(category));
+    formData.append("title", title);
+    formData.append("sku", sku);
+    // formData.append("sku", generateKSKU(category));
     formData.append("category", category);
     formData.append("color", color);
     formData.append("size", size);
@@ -71,7 +74,7 @@ const AddProduct = () => {
   return (
     <div>
       {isLoading && <Loader />}
-      <h3 className="--mt">Add New Product</h3>
+      <h3 className="--mt --flex-center">Add New Product</h3>
       <ProductForm
         product={product}
         productImage={productImage}

@@ -44,7 +44,6 @@ const Login = () => {
     setIsLoading(true);
     try {
       const data = await loginUser(userData);
-      console.log(data);
       await dispatch(SET_LOGIN(true));
       await dispatch(SET_NAME(data.name));
       navigate("/dashboard");
@@ -55,11 +54,11 @@ const Login = () => {
   };
 
   return (
-    <div className={`container ${styles.auth}`}>
+    <div className={styles.container}>
       {isLoading && <Loader />}
-      <Card>
-        <div className={styles.form}>
-          <div className="--flex-center">
+      <div className={styles.margin}>
+        <div className={styles.card}>
+          <div>
             <BiLogIn size={35} color="#999" />
           </div>
           <h2>Login</h2>
@@ -72,6 +71,7 @@ const Login = () => {
               name="email"
               value={email}
               onChange={handleInputChange}
+              className={styles.input}
             />
             <input
               type="password"
@@ -80,20 +80,44 @@ const Login = () => {
               name="password"
               value={password}
               onChange={handleInputChange}
+              className={styles.input}
             />
-            <button type="submit" className="--btn --btn-primary --btn-block">
+            <button
+              type="submit"
+              className={styles.button}
+              onMouseOver={(e) =>
+                (e.target.style.backgroundColor =
+                  styles.buttonHover.backgroundColor)
+              }
+              onMouseOut={(e) =>
+                (e.target.style.backgroundColor = styles.button.backgroundColor)
+              }
+            >
               Login
             </button>
           </form>
-          <Link to="/forgot">Forgot Password</Link>
 
-          <span className={styles.register}>
-            <Link to="/">Home</Link>
-            <p> &nbsp; Don't have an account? &nbsp;</p>
-            <Link to="/verify-email">Register</Link>
-          </span>
+          <div className={styles.firstLink}>
+            <Link to="/" className={styles.link}>
+              Home
+            </Link>
+            <Link to="/forgot" className={styles.link}>
+              Forgot Password
+            </Link>
+          </div>
+
+          <div className={styles.links}>
+            <div className={styles.registerContainer}>
+              <p className={styles.registerText}>
+                &nbsp; Don't have an account? &nbsp;
+              </p>
+              <Link to="/verify-email" className={styles.link}>
+                Register
+              </Link>
+            </div>
+          </div>
         </div>
-      </Card>
+      </div>
     </div>
   );
 };

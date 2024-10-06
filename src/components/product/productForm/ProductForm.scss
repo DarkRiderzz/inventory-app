@@ -2,13 +2,13 @@
   margin-bottom: 5rem;
   .card {
     width: 100%;
-    max-width: 500px;
+    // max-width: 500px;
     padding: 1rem;
   }
   form {
     label {
       display: block;
-      font-size: 1.4rem;
+      font-size: 1.8rem;
       font-weight: 500;
       color: var(--color-dark);
     }
@@ -35,6 +35,20 @@
   border: 1px solid var(--dark-blue);
   padding: 5px;
 }
+.group {
+  border: 1px solid var(--dark-blue);
+  padding: 10px;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  width: 100%;
+  max-width: 500px;
+  height: auto; /* Adjust based on content */
+}
 
 .image-preview {
   width: 100%;
@@ -54,4 +68,15 @@
 
 .image-show {
   display: block;
+}
+
+.flex-form {
+  display: flex;
+  justify-content: space-around;
+  gap: 20px;
+  margin-top: 5rem;
+}
+
+.product-dec {
+  font-size: 24px !important;
 }

@@ -38,12 +38,34 @@ const updateProduct = async (id, formData) => {
   return response.data;
 };
 
+const exportProducts = async () => {
+  const response = await axios.get(`${API_URL}export-products`, {
+    withCredentials: true,
+  });
+  return response.data;
+};
+
+const importProducts = async (file) => {
+  const formData = new FormData();
+  formData.append("file", file);
+
+  const response = await axios.post(`${API_URL}import-products`, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+
+  return response.data;
+};
+
 const productService = {
   createProduct,
   getProducts,
   getProduct,
   deleteProduct,
   updateProduct,
+  exportProducts,
+  importProducts,
 };
 
 export default productService;

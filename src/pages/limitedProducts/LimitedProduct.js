@@ -119,6 +119,7 @@ const LimitedProduct = ({ isLoading }) => {
             <Search
               value={search}
               onChange={(e) => setSearch(e.target.value)}
+              placeholder="search product"
             />
           </span>
         </div>
@@ -132,12 +133,13 @@ const LimitedProduct = ({ isLoading }) => {
             <table>
               <thead>
                 <tr>
-                  <th>s/n</th>
+                  <th>S No.</th>
+                  <th>Title</th>
                   <th>SKU Code</th>
                   <th>Category</th>
-                  <th>color</th>
-                  <th>size</th>
-                  <th>Price</th>
+                  <th>Color</th>
+                  <th>Size</th>
+                  <th>COGS</th>
                   <th>Quantity</th>
                   <th>Location</th>
                   <th>Value</th>
@@ -149,7 +151,8 @@ const LimitedProduct = ({ isLoading }) => {
                 {currentItems.map((limitedStockProducts, index) => {
                   const {
                     _id,
-                    name,
+                    title,
+                    sku,
                     category,
                     price,
                     quantity,
@@ -160,7 +163,8 @@ const LimitedProduct = ({ isLoading }) => {
                   return (
                     <tr key={_id}>
                       <td>{index + 1}</td>
-                      <td>{shortenText(name, 16)}</td>
+                      <td>{shortenText(title, 25)}</td>
+                      <td>{shortenText(sku, 16)}</td>
                       <td>{category}</td>
                       <td>{color}</td>
                       <td>{size}</td>

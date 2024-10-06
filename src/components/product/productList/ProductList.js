@@ -2,7 +2,13 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { SpinnerImg } from "../../loader/Loader";
 import "./productList.scss";
-import { FaEdit, FaMinus, FaPlus, FaTrashAlt } from "react-icons/fa";
+import {
+  FaDownload,
+  FaEdit,
+  FaMinus,
+  FaPlus,
+  FaTrashAlt,
+} from "react-icons/fa";
 import { AiOutlineEye } from "react-icons/ai";
 import Search from "../../search/Search";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,11 +21,13 @@ import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import {
   deleteProduct,
+  exportProducts,
   getProducts,
 } from "../../../redux/features/product/productSlice";
 import { Link } from "react-router-dom";
 import productService from "../../../redux/features/product/productService";
 import useScanDetection from "use-scan-detection";
+import { toast } from "react-toastify";
 
 const ProductList = ({ products, isLoading }) => {
   const [incrementSearch, setIncSearch] = useState("");
@@ -65,6 +73,33 @@ const ProductList = ({ products, isLoading }) => {
     return text;
   };
 
+  // const productDownlaodHandler = async () => {
+  //   console.log("ji");
+  //   await dispatch(exportProducts);
+  // };
+  const productDownlaodHandler = async () => {
+    try {
+      const response = await dispatch(exportProducts()).unwrap(); // Ensure you're unwrapping the payload
+
+      // Create a Blob from the CSV response data
+      const blob = new Blob([response], { type: "text/csv" });
+      const url = window.URL.createObjectURL(blob);
+
+      // Create a temporary anchor element to trigger download
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "Product-Data.csv"; // The file name for the downloaded file
+      document.body.appendChild(a);
+      a.click();
+
+      // Cleanup
+      a.remove();
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error("Download failed", error);
+    }
+  };
+
   const delProduct = async (id) => {
     // console.log(id);
 
@@ -92,12 +127,19 @@ const ProductList = ({ products, isLoading }) => {
   //Function for Increment Product
   const addProduct = useCallback(
     async (id, quantity) => {
-      // console.log(id);
-      const updatedQuantity = Number(quantity) + 1; // Increment quantity
-      const formData = new FormData();
-      formData.append("quantity", Number(updatedQuantity));
-      await productService.updateProduct(id, formData);
-      await dispatch(getProducts());
+      try {
+        const updatedQuantity = Number(quantity) + 1; // Increment quantity
+        const formData = new FormData();
+        formData.append("quantity", updatedQuantity);
+        await productService.updateProduct(id, formData);
+        await dispatch(getProducts());
+      } catch (error) {
+        if (error.response && error.response.status === 403) {
+          toast.error("You do not have permission to update the product.");
+        } else {
+          console.error("Error incrementing product:", error);
+        }
+      }
     },
     [dispatch]
   );
@@ -105,35 +147,51 @@ const ProductList = ({ products, isLoading }) => {
   //Functon for Decremetn Product
   const decrementProduct = useCallback(
     async (id, quantity) => {
-      // console.log(id);
-      if (quantity > 0) quantity--;
-      const formData = new FormData();
-      formData.append("quantity", Number(quantity));
-      await productService.updateProduct(id, formData);
-      await dispatch(getProducts());
+      try {
+        if (quantity > 0) quantity--;
+        const formData = new FormData();
+        formData.append("quantity", quantity);
+        await productService.updateProduct(id, formData);
+        await dispatch(getProducts());
+      } catch (error) {
+        if (error.response && error.response.status === 403) {
+          toast.error("You do not have permission to update the product.");
+        }
+      }
     },
     [dispatch]
   );
 
   // const handleScane = () => {
-  //   setBarcode("admin");
+  //   setBarcode("15 BLTWB - WHITE 1");
   // };
   //Handle Increment and decrement of  product on scanning
   useEffect(() => {
-    // console.log(barcode);
-    if (barcode && !barcode.includes("Backspace") && mode === "increment") {
+    if (
+      barcode &&
+      !barcode.includes("Backspace") &&
+      mode === "increment" &&
+      isScanning === true
+    ) {
       setIncSearch(barcode);
     }
 
-    if (barcode && !barcode.includes("Backspace") && mode === "decrement") {
+    if (
+      barcode &&
+      !barcode.includes("Backspace") &&
+      mode === "decrement" &&
+      isScanning === true
+    ) {
       setDecSearch(barcode);
     }
 
-    const matchingProduct = products.find(
-      (product) => product.name === barcode
-    );
+    const matchingProduct = products.find((product) => product.sku === barcode);
 
-    if (matchingProduct && matchingProduct._id !== lastScannedProduct) {
+    if (
+      matchingProduct &&
+      matchingProduct._id !== lastScannedProduct &&
+      isScanning === true
+    ) {
       if (mode === "increment") {
         addProduct(matchingProduct._id, matchingProduct.quantity);
       } else if (mode === "decrement") {
@@ -164,7 +222,7 @@ const ProductList = ({ products, isLoading }) => {
   // Handle manual search for increment
   useEffect(() => {
     const matchingProduct = products.find(
-      (product) => product.name === incrementSearch
+      (product) => product.sku === incrementSearch
     );
 
     if (matchingProduct && matchingProduct._id !== lastMannalProductInc) {
@@ -181,7 +239,7 @@ const ProductList = ({ products, isLoading }) => {
   // Handle manual search for decrement
   useEffect(() => {
     const matchingProduct = products.find(
-      (product) => product.name === decrementSearch
+      (product) => product.sku === decrementSearch
     );
 
     if (matchingProduct && matchingProduct._id !== lastMannalProductDec) {
@@ -233,7 +291,8 @@ const ProductList = ({ products, isLoading }) => {
         <div className="--flex-between --flex-dir-column">
           <span className="--flex-between switch-search-cnt">
             <h3>Inventory Items</h3>
-            <button onClick={handleScannerMode} className="toggle-mode-btn">
+
+            <button onClick={handleScannerMode} className="btn-primary">
               {isScanning ? "Switch to Manual" : "Switch to Scan"}
             </button>
           </span>
@@ -241,36 +300,61 @@ const ProductList = ({ products, isLoading }) => {
           {isScanning ? (
             <div className="scanner-cnt --flex-between  ">
               {mode === "increment" ? (
-                <span>
-                  <Search
-                    value={incrementSearch}
-                    onChange={(e) => setIncSearch(e.target.value)}
-                    placeholder="scan for increment"
-                  />
-                </span>
+                <div className="--flex-between">
+                  <button
+                    onClick={productDownlaodHandler}
+                    className=" btn-download"
+                  >
+                    <FaDownload />
+                  </button>
+
+                  <span>
+                    <Search
+                      value={incrementSearch}
+                      onChange={(e) => setIncSearch(e.target.value)}
+                      placeholder="scan for increment"
+                    />
+                  </span>
+                </div>
               ) : (
-                <span>
-                  <Search
-                    value={decrementSearch}
-                    onChange={(e) => setDecSearch(e.target.value)}
-                    placeholder="scan for decrement"
-                  />
-                </span>
+                <div className="--flex-between">
+                  <button
+                    onClick={productDownlaodHandler}
+                    className=" btn-download"
+                  >
+                    <FaDownload />
+                  </button>
+                  <span>
+                    <Search
+                      value={decrementSearch}
+                      onChange={(e) => setDecSearch(e.target.value)}
+                      placeholder="scan for decrement"
+                    />
+                  </span>
+                </div>
               )}
               <span>
-                <button onClick={toggleMode} className="toggle-mode-btn">
+                <button onClick={toggleMode} className="btn-primary">
                   {mode === "increment" ? "Increment Mode" : "Decrement Mode"}
                 </button>
               </span>
             </div>
           ) : (
-            <span>
-              <Search
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                placeholder="search manually"
-              />
-            </span>
+            <div className="--flex-between">
+              <button
+                onClick={productDownlaodHandler}
+                className=" btn-download"
+              >
+                <FaDownload />
+              </button>
+              <span>
+                <Search
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                  placeholder="search manually"
+                />
+              </span>
+            </div>
           )}
         </div>
 
@@ -283,12 +367,13 @@ const ProductList = ({ products, isLoading }) => {
             <table>
               <thead>
                 <tr>
-                  <th>s/n</th>
+                  <th>S No.</th>
+                  <th>Title</th>
                   <th>SKU Code</th>
                   <th>Category</th>
-                  <th>color</th>
-                  <th>size</th>
-                  <th>Price</th>
+                  <th>Color</th>
+                  <th>Size</th>
+                  <th>COGS</th>
                   <th>Quantity</th>
                   <th>Location</th>
                   <th>Value</th>
@@ -300,7 +385,8 @@ const ProductList = ({ products, isLoading }) => {
                 {currentItems.map((product, index) => {
                   const {
                     _id,
-                    name,
+                    title,
+                    sku,
                     category,
                     price,
                     quantity,
@@ -311,7 +397,8 @@ const ProductList = ({ products, isLoading }) => {
                   return (
                     <tr key={_id}>
                       <td>{index + 1}</td>
-                      <td>{shortenText(name, 16)}</td>
+                      <td>{shortenText(title, 25)}</td>
+                      <td>{shortenText(sku, 16)}</td>
                       <td>{category}</td>
                       <td>{color}</td>
                       <td>{size}</td>
@@ -336,7 +423,7 @@ const ProductList = ({ products, isLoading }) => {
                         <span>
                           <FaPlus
                             size={20}
-                            color={"green"}
+                            color={"#4CAF50"}
                             onClick={() => addProduct(_id, quantity)}
                           />
                         </span>
@@ -347,7 +434,7 @@ const ProductList = ({ products, isLoading }) => {
                         </span>
                         <span>
                           <Link to={`/edit-product/${_id}`}>
-                            <FaEdit size={20} color={"blue"} />
+                            <FaEdit size={20} color={"#4169e1"} />
                           </Link>
                         </span>
                         <span>
